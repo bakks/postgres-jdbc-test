@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Main {
+    public static final String JDBC_URL = "jdbc:postgresql://127.0.0.1:5432/commonwealth";
+
     private static void printRS(ResultSet rs) throws SQLException {
         System.out.println("");
         ResultSetMetaData md = rs.getMetaData();
@@ -32,8 +34,7 @@ public class Main {
         ResultSet rs;
 
         Class.forName("org.postgresql.Driver").newInstance();
-        Connection conn = DriverManager
-                .getConnection("jdbc:postgresql://127.0.0.1:5432/commonwealth");
+        Connection conn = DriverManager.getConnection(JDBC_URL);
         st = conn.createStatement();
         rs = st.executeQuery(query);
         CachedRowSetImpl crs = new CachedRowSetImpl();
@@ -69,16 +70,15 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         Class.forName("org.postgresql.Driver").newInstance();
-       // String url = "jdbc:postgresql://127.0.0.1:5433/commonwealth";
-        //Connection conn = DriverManager.getConnection(url);
+        Connection conn = DriverManager.getConnection(JDBC_URL);
 
         // make sure autocommit is off
-        //conn.setAutoCommit(false);
+        conn.setAutoCommit(false);
 
-        //preparedStatementQuery(conn);
-        //basicQuery(conn, "select * from pbbakkum.test limit 10;");
+        preparedStatementQuery(conn);
+        basicQuery(conn, "select * from pbbakkum.test limit 10;");
         cachedRowSetQuery("select * from pbbakkum.test limit 10");
         cachedRowSetQuery("select random()*9 from pbbakkum.nfl_playbyplay limit 10;");
-        //cachedRowSetQuery("select qtr from pbbakkum.nfl_playbyplay limit 10;");
+        cachedRowSetQuery("select qtr from pbbakkum.nfl_playbyplay limit 10;");
     }
 }

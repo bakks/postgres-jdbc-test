@@ -25,8 +25,7 @@ public class ResultSetExample {
 
         try {
             Class.forName("org.postgresql.Driver").newInstance();
-            Connection conn = DriverManager
-                    .getConnection("jdbc:postgresql://127.0.0.1/commonwealth");
+            Connection conn = DriverManager.getConnection(Main.JDBC_URL);
             stmt = conn.createStatement();
             resultSet = stmt.executeQuery(qry);
             CachedRowSetImpl crs = new CachedRowSetImpl();
